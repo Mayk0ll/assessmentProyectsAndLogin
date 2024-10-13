@@ -1,0 +1,14 @@
+footer {
+  position: fixed;
+  bottom: 0;
+  padding: 5px;
+  width: 100%;
+  color: black;
+  background-color: #ffd54f;
+}
+
+h4 {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
