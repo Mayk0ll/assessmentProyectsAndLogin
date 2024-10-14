@@ -1,0 +1,62 @@
+<div class="ml-5 mr-5 mb-6">
+  <div class="flex justify-content-center m-3">
+    <button type="button" (click)="redirectToList()">Atras</button>
+  </div>
+  <div class="grid">
+    <div class="col-4 pt-0 pl-5">
+      <div class="containerView border-round-lg p-5">
+        <h3 class="text-center">Compañia</h3>
+        <form class="flex flex-column gap-3">
+          <div class="flex flex-column">
+            <label class="mb-1">Nombre: </label>
+            <input pInputText id="username" [disabled]="true" aria-describedby="username-help" />
+          </div>
+          <div class="flex flex-column">
+            <label class="mb-1">Email: </label>
+            <input pInputText id="username" [disabled]="true" aria-describedby="username-help" />
+          </div>
+          <div class="flex flex-column">
+            <label class="mb-1">Direccion: </label>
+            <input pInputText id="username" [disabled]="true" aria-describedby="username-help" />
+          </div>
+          <div class="flex flex-column">
+            <label class="mb-1">Telefono: </label>
+            <input pInputText id="username" [disabled]="true" aria-describedby="username-help" />
+          </div>
+          <div class="flex flex-column">
+            <label class="mb-1">Sitio web: </label>
+            <input pInputText id="username" [disabled]="true" aria-describedby="username-help" />
+          </div>
+          <div class="flex flex-column">
+            <button type="button">Editar</button>
+          </div>
+          <ng-template>
+          </ng-template>
+        </form>
+      </div>
+    </div>
+    <div class="col-8 pt-0 pl-3 pr-3">
+      <div class="containerView border-round-lg pt-2 pl-5 pr-5 pb-2">
+        <h3 class="text-center">Tareas</h3>
+        <div>
+          <p-table [value]="tasks" [tableStyle]="{'min-width': '100%'}" sortMode="multiple">
+            <ng-template pTemplate="header">
+              <tr>
+                <th pSortableColumn="id" style="width:20%" class="text-center"> ID <p-sortIcon field="id" /></th>
+                <th pSortableColumn="title" style="width:60%"> Titulo <p-sortIcon field="title" /></th>
+                <th pSortableColumn="completed" style="width:20%" class="text-center"> Estado <p-sortIcon field="completed"/></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-task let-rowIndex="rowIndex">
+              <tr>
+                <td class="text-center">{{ task.id }}</td>
+                <td>{{ task.title }}</td>
+                <td class="text-center"><p-badge [value]="task.completed ? 'Completado':'Incompleto'" [severity]="task.completed ? 'success':'danger'">></p-badge></td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

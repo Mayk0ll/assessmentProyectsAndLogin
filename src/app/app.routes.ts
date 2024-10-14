@@ -19,29 +19,33 @@ export const routes: Routes = [
       }
     ]
   },{
-    path: 'proyects',
-    loadComponent: () => import('./proyects/layout/layout.component'),
+    path: 'projects',
+    loadComponent: () => import('./projects/layout/layout.component'),
     children: [
       {
-        path: '',
-        title: 'List Proyects',
-        loadComponent: () => import('./proyects/pages/list-proyects/list-proyects.component')
+        path: 'list',
+        title: 'List projects',
+        loadComponent: () => import('./projects/pages/list-projects/list-projects.component')
       },{
-        path: ':id',
-        title: 'View Proyect',
-        loadComponent: () => import('./proyects/pages/view-proyect/view-proyect.component')
+        path: 'view/:id',
+        title: 'View_project',
+        loadComponent: () => import('./projects/pages/view-projects/view-projects.component')
       },{
         path: '',
-        redirectTo: 'proyects',
+        redirectTo: 'list',
         pathMatch: 'full'
+      },
+      {
+        path: '**',
+        redirectTo: 'list',
       }
     ]
   },{
     path: '**',
-    redirectTo: 'proyects',
+    redirectTo: 'login',
   },{
     path: '',
-    redirectTo: 'proyects',
+    redirectTo: 'login',
     pathMatch: 'full'
   }
 ];

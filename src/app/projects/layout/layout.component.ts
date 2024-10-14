@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { getPrimeNGModules } from '../../prime-ng/prime-ng.component';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { getPrimeNGModules } from '../../prime-ng/prime-ng.component';
+import { UserService } from '@services/index.ts';
 
 
 
@@ -15,15 +17,23 @@ import { MenuItem } from 'primeng/api';
 
 export default class LayoutComponent {
 
+  private userService = inject(UserService);
+  private router = inject(Router);
+
   public items: MenuItem[] = [];
 
+  logout(){
+    console.log('Cerrar sesión');
+    this.userService.logout();
+    this.router.navigate(['/login']);
+  }
 
 
 
   ngOnInit(){
     this.items = [
       {
-        label:'Proyectos',
+        label:'projectos',
         icon:'pi pi-globe'
       },
       {
