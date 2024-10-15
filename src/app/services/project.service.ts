@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { map, Observable } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { Project } from '@interfaces/index.ts';
 
 
@@ -22,7 +22,14 @@ export class ProjectService {
   }
 
   getProjectById(id: number): Observable<Project> {
+    const proyectFount:Project|undefined = this.projectsTemp.find(project => project.id == id);
+    if(proyectFount) return of(proyectFount);
     return this.http.get<Project>(`${this.urlProjects}/${id}`);
+  }
+
+  addProject(project: Project){
+    this.projectsTemp.push(project);
+    return of;
   }
 
 }

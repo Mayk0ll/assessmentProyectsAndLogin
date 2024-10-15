@@ -1,43 +1,85 @@
-<div class="ml-5 mr-5 mb-6">
-  <div class="flex justify-content-center m-3">
-    <button type="button" (click)="redirectToList()">Atras</button>
-  </div>
+<div class="m-5">
   <div class="grid">
     <div class="col-4 pt-0 pl-5">
       <div class="containerView border-round-lg p-5">
-        <h3 class="text-center">Compañia</h3>
-        <form class="flex flex-column gap-3">
+        <h3 class="text-center">Proyecto</h3>
+        <form class="flex flex-column gap-3" [formGroup]="projectForm">
           <div class="flex flex-column">
-            <label class="mb-1">Nombre: </label>
-            <input pInputText id="username" [disabled]="true" aria-describedby="username-help" />
+            <label for="name" class="mb-1">Nombre: </label>
+            <input pInputText id="name" formControlName="name" aria-describedby="name-help" />
           </div>
           <div class="flex flex-column">
-            <label class="mb-1">Email: </label>
-            <input pInputText id="username" [disabled]="true" aria-describedby="username-help" />
+            <label for="username" class="mb-1">Username: </label>
+            <input pInputText id="username" formControlName="username" aria-describedby="username-help" />
           </div>
           <div class="flex flex-column">
-            <label class="mb-1">Direccion: </label>
-            <input pInputText id="username" [disabled]="true" aria-describedby="username-help" />
+            <label for="email" class="mb-1">Email: </label>
+            <input pInputText id="email" formControlName="email" aria-describedby="email-help" />
+          </div>
+
+          <h4 class="text-center mt-4">Dirección</h4>
+          <div formGroupName="address">
+            <div class="flex flex-column">
+              <label for="street" class="mb-1">Calle: </label>
+              <input pInputText id="street" formControlName="street" aria-describedby="street-help" />
+            </div>
+            <div class="flex flex-column">
+              <label for="suite" class="mb-1">Suite: </label>
+              <input pInputText id="suite" formControlName="suite" aria-describedby="suite-help" />
+            </div>
+            <div class="flex flex-column">
+              <label for="city" class="mb-1">Ciudad: </label>
+              <input pInputText id="city" formControlName="city" aria-describedby="city-help" />
+            </div>
+            <div class="flex flex-column">
+              <label for="zipcode" class="mb-1">Código Postal: </label>
+              <input pInputText id="zipcode" formControlName="zipcode" aria-describedby="zipcode-help" />
+            </div>
+
+            <h4 class="text-center mt-4">Coordenadas</h4>
+            <div formGroupName="geo">
+              <div class="flex flex-column">
+                <label for="lat" class="mb-1">Latitud: </label>
+                <input pInputText id="lat" formControlName="lat" aria-describedby="lat-help" />
+              </div>
+              <div class="flex flex-column">
+                <label for="lng" class="mb-1">Longitud: </label>
+                <input pInputText id="lng" formControlName="lng" aria-describedby="lng-help" />
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-column">
+            <label for="phone" class="mb-1">Teléfono: </label>
+            <input pInputText id="phone" formControlName="phone" aria-describedby="phone-help" />
           </div>
           <div class="flex flex-column">
-            <label class="mb-1">Telefono: </label>
-            <input pInputText id="username" [disabled]="true" aria-describedby="username-help" />
+            <label for="website" class="mb-1">Sitio web: </label>
+            <input pInputText id="website" formControlName="website" aria-describedby="website-help" />
           </div>
-          <div class="flex flex-column">
-            <label class="mb-1">Sitio web: </label>
-            <input pInputText id="username" [disabled]="true" aria-describedby="username-help" />
+
+          <h4 class="text-center mt-4">Compañía</h4>
+          <div formGroupName="company">
+            <div class="flex flex-column">
+              <label for="companyName" class="mb-1">Nombre de la Compañía: </label>
+              <input pInputText id="companyName" formControlName="name" aria-describedby="companyName-help" />
+            </div>
+            <div class="flex flex-column">
+              <label for="catchPhrase" class="mb-1">Eslogan: </label>
+              <input pInputText id="catchPhrase" formControlName="catchPhrase" aria-describedby="catchPhrase-help" />
+            </div>
+            <div class="flex flex-column">
+              <label for="bs" class="mb-1">BS: </label>
+              <input pInputText id="bs" formControlName="bs" aria-describedby="bs-help" />
+            </div>
           </div>
-          <div class="flex flex-column">
-            <button type="button">Editar</button>
-          </div>
-          <ng-template>
-          </ng-template>
         </form>
       </div>
     </div>
     <div class="col-8 pt-0 pl-3 pr-3">
       <div class="containerView border-round-lg pt-2 pl-5 pr-5 pb-2">
         <h3 class="text-center">Tareas</h3>
+        <button>+ Nueva tarea</button>
         <div>
           <p-table [value]="tasks" [tableStyle]="{'min-width': '100%'}" sortMode="multiple">
             <ng-template pTemplate="header">
@@ -58,5 +100,9 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="flex justify-content-center m-5 mb-6">
+    <button type="button" (click)="saveProject()">Crear/Guardar proyecto</button>
+    <button type="button" [routerLink]="['/projects/list']">Atras</button>
   </div>
 </div>

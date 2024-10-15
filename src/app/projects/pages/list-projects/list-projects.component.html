@@ -1,7 +1,7 @@
 <div class="card mb-6">
   <h2 class="text-center">Lista de proyectos</h2>
   <div class="buttonContainer">
-    <p-button label="projecto" icon="pi pi-plus" iconPos="left"></p-button>
+    <p-button label="Nuevo proyecto" icon="pi pi-plus" iconPos="left" [routerLink]="['/projects/view/0']"></p-button>
   </div>
   <div class="ml-5 mr-5">
     <p-table [value]="projects" sortMode="multiple" [tableStyle]="{'width': '100%'}">

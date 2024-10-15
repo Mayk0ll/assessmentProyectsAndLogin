@@ -8,7 +8,7 @@ import { map, Observable } from 'rxjs';
 })
 export class TaskService {
 
-  private urlTask = 'https://jsonplaceholder.typicode.com/todos';
+  private urlTask = 'https://jsonplaceholder.typicode.com/todoss';
   private tasksTemp: Task[] = [];
   private http = inject( HttpClient );
 

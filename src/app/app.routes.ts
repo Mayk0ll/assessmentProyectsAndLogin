@@ -1,8 +1,11 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './guards/auth.guard';
+import { publicGuard } from './guards/public.guard';
 
 export const routes: Routes = [
   {
     path: '',
+    canActivate: [publicGuard],
     children: [
       {
         path: 'login',
@@ -21,6 +24,7 @@ export const routes: Routes = [
   },{
     path: 'projects',
     loadComponent: () => import('./projects/layout/layout.component'),
+    canActivate: [authGuard],
     children: [
       {
         path: 'list',
@@ -28,7 +32,7 @@ export const routes: Routes = [
         loadComponent: () => import('./projects/pages/list-projects/list-projects.component')
       },{
         path: 'view/:id',
-        title: 'View_project',
+        title: 'View project',
         loadComponent: () => import('./projects/pages/view-projects/view-projects.component')
       },{
         path: '',
