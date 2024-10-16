@@ -1,5 +1,5 @@
-export interface Project {
-  id?:       number;
+export interface IProject {
+  id:       number;
   name:     string;
   username: string;
   email:    string;

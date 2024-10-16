@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { getPrimeNGModules } from '../../../prime-ng/prime-ng.component';
 import { ProjectService } from '@services/index.ts';
-import { Project } from '@interfaces/index.ts';
+import { Project } from '../../../models';
 
 
 @Component({
@@ -21,8 +21,8 @@ export default class ListprojectsComponent implements OnInit {
   ngOnInit() {
     this.projectService.getAllProjects().subscribe( (projects: Project[]) => {
       this.projects = projects;
+      console.log(projects);
     });
-
   }
 
 }

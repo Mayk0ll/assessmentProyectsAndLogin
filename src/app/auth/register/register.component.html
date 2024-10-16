@@ -1,17 +1,29 @@
 <div class="body">
-  <div class="login-container">
-    <h2>Login</h2>
-    <form [formGroup]="formRegister" (ngSubmit)="register()">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" class="form-control" formControlName="email" />
+  <div class="login-container p-5">
+    <h2>Crear Cuenta</h2>
+    <form [formGroup]="formRegister" autocomplete="off" (ngSubmit)="register()" [formGroup]="formRegister">
+      <div class="flex flex-column gap-2 mb-3">
+        <label for="name" class="text-left">Nombre: </label>
+        <input type="text" pInputText id="name" name="name" aria-describedby="username-help"  formControlName="name" />
+        <small id="username-help" class="text-left text-red-300" *ngIf="isValidfield('name')"> {{ getFieldsErrors('name') }}</small>
       </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" class="form-control" formControlName="password" />
+      <div class="flex flex-column gap-2 mb-3">
+        <label for="email" class="text-left">Email: </label>
+        <input type="text" pInputText id="email" name="email" aria-describedby="username-help"  formControlName="email" />
+        <small id="username-help" class="text-left text-red-300" *ngIf="isValidfield('email')"> {{ getFieldsErrors('email') }}</small>
+      </div>
+      <div class="flex flex-column gap-2 mb-3">
+        <label for="password" class="text-left">Contraseña: </label>
+        <input type="password" pInputText id="password" name="password" aria-describedby="username-help"  formControlName="password" />
+        <small id="username-help" class="text-left text-red-300" *ngIf="isValidfield('password')"> {{ getFieldsErrors('password') }}</small>
+      </div>
+      <div class="flex flex-column gap-2 mb-3">
+        <label for="password2" class="text-left">Repetir contraseña: </label>
+        <input type="password" pInputText id="password2" name="password2" aria-describedby="username-help"  formControlName="password2" />
+        <small id="username-help" class="text-left text-red-300" *ngIf="isValidfield('password2')"> {{ getFieldsErrors('password2') }}</small>
       </div>
       <button type="submit" class="btn btn-primary">Crear cuenta</button>
     </form>
-    <span class="cursorPointer" (click)="redirectToLogin()">Ingresar</span>
+    <span class="cursorPointer mt-3" (click)="redirectToLogin()">Ingresar</span>
   </div>
 </div>

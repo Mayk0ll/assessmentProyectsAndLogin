@@ -6,7 +6,6 @@ export const publicGuard: CanActivateFn = (route, state) => {
   const userService = inject(UserService);
   const router = inject( Router );
 
-  console.log(userService.isLogged() ? 'User is logged' : 'User is not logged');
   if (!userService.isLogged()) {
     return true;
   }

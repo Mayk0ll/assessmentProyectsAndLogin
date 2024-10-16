@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { getPrimeNGModules } from '../../../prime-ng/prime-ng.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Project, Task } from '@interfaces/index.ts';
 import { ProjectService, TaskService } from '@services/index.ts';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Project, Task } from '../../../models';
 
 
 
@@ -24,7 +24,7 @@ export default class ViewprojectComponent implements OnInit {
   private router = inject( Router );
   private fb = inject( FormBuilder );
 
-  public project: Project|null = {} as Project;
+  public project: Project = new Project();
   public tasks: Task[] = [];
   public newTasks: Task[] = [];
 
@@ -58,30 +58,23 @@ export default class ViewprojectComponent implements OnInit {
 
   }
 
- 
-
-  saveProject() {
-    if( this.projectForm.valid ){
-      this.projectForm.markAllAsTouched();
-    }
 
 
-
-    this.project = this.projectForm.value as Project;
+  async saveProject() {
+    if( this.projectForm.valid ){ this.projectForm.markAllAsTouched() }
+    this.project = {...this.project, ...this.projectForm.value as Project};
+    const idProject = await this.projectService.createOrUpdateProject(this.project);
   }
 
   ngOnInit(): void {
     this.activateRouter.params.subscribe(params => {
       const projectId = Number(params['id']);
-
       if(projectId){
-        this.projectService.getProjectById(projectId).subscribe(project => {
+        this.projectService.getProjectById(projectId).subscribe((project: Project) => {
           if( !project ) this.router.navigate(['/projects/list'])
-          this.project = project;
-          this.projectForm.patchValue(project);
-
-          this.projectForm.patchValue(this.project);
-          this.taskService.getAllTasksByprojectId(projectId).subscribe(tasks => { this.tasks = tasks });
+            this.project = project;
+            this.projectForm.patchValue({...project});
+            this.taskService.getAllTasksByprojectId(projectId).subscribe(tasks => { this.tasks = tasks });
         });
       }
     });

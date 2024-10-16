@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from '@interfaces/index.ts';
+import { User } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +24,8 @@ export class UserService {
   public setUser(user: User): void { this.user = user }
 
   public getUser(): User|null { return this.user }
+
+  public getUsers(): User[] { return this.users }
 
   public logout(): void {
     this.user = null;

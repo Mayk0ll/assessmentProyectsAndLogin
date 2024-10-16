@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Task } from '@interfaces/index.ts';
 import { map, Observable } from 'rxjs';
+import { Task } from '../models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
 
-  private urlTask = 'https://jsonplaceholder.typicode.com/todoss';
+  private urlTask = 'https://jsonplaceholder.typicode.com/todos';
   private tasksTemp: Task[] = [];
   private http = inject( HttpClient );
 
