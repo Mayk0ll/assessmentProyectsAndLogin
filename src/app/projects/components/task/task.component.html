@@ -8,9 +8,9 @@
     <div class="flex flex-column gap-2">
       <p-checkbox formControlName="completed" label="Completado" name="completed" binary="true" />
     </div>
-    <div class="flex justify-content-center">
-      <button>Guardar Tarea</button>
-      <button type="button" (click)="closeTask()">Cerrar</button>
+    <div class="flex justify-content-center gap-3">
+      <p-button type="submit" label="Guardar Tarea" severity="primary"/>
+      <p-button label="Cancelar" severity="danger" (click)="closeTask()"/>
     </div>
   </form>
 </div>

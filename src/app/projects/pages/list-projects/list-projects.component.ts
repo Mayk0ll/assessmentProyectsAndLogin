@@ -16,7 +16,19 @@ export default class ListprojectsComponent implements OnInit {
 
   public projectService = inject( ProjectService );
   public projects: Project[] = [];
+  public visible: boolean = false;
+  public idSelected: number = 0;
 
+  showDialog(id: number): void {
+    this.idSelected = id;
+    this.visible = true;
+  }
+
+  deleteProject(): void {
+    this.projects = this.projects.filter(project => project.id !== this.idSelected);
+    this.projectService.deleteProject(this.idSelected);
+    this.visible = false;
+  }
 
   ngOnInit() {
     this.projectService.getAllProjects().subscribe( (projects: Project[]) => {

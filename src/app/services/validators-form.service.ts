@@ -31,14 +31,21 @@ export class ValidatorsFormService {
     }
   }
 
-  public isValidfield( field: string, form: FormGroup ): boolean | null {
-    return form.controls[field].errors && form.controls[field].touched;
+  // public isValidfield( field: string, form: FormGroup ): boolean | null {
+  //   return form.controls[field].errors && form.controls[field].touched;
+  // }
+
+  public isValidfield(field: string, form: FormGroup): boolean | null {
+    const control = form.get(field);
+    return control ? control.errors && control.touched : null;
   }
 
-  public getFieldsErrors( field: string, form: FormGroup ): string | null {
-    if ( !form.controls[field] ) return null;
+  public getFieldsErrors(field: string, form: FormGroup): string | null {
+    const control = form.get(field);
 
-    const errors = form.controls[field].errors || {};
+    if (!control) return null;
+
+    const errors = control.errors || {};
 
     for (const key of Object.keys(errors)) {
       switch (key) {
@@ -60,6 +67,7 @@ export class ValidatorsFormService {
           return null;
       }
     }
-    return null;
+
+    return null;  // Si no hay errores, devolvemos null
   }
 }

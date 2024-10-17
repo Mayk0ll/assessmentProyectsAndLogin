@@ -1,24 +1,27 @@
-<div class="m-5">
-  <div class="grid">
-    <div class="col-4 pt-0 pl-5">
+<div class="m-5 ">
+  <div class="grid ">
+    <div class="col-4 pt-0 pl-5 overflow-auto maxScreen">
       <div class="containerView border-round-lg p-5">
         <h3 class="text-center">Proyecto</h3>
         <form class="flex flex-column gap-3" [formGroup]="projectForm">
           <div class="flex flex-column">
             <label for="name" class="mb-1">Nombre: </label>
             <input pInputText id="name" formControlName="name" aria-describedby="name-help" />
+            <small id="username-help" class="text-left text-red-300" *ngIf="isValidfield('name')"> {{ getFieldsErrors('name') }}</small>
           </div>
           <div class="flex flex-column">
             <label for="username" class="mb-1">Username: </label>
             <input pInputText id="username" formControlName="username" aria-describedby="username-help" />
+            <small id="username-help" class="text-left text-red-300" *ngIf="isValidfield('username')"> {{ getFieldsErrors('username') }}</small>
           </div>
           <div class="flex flex-column">
             <label for="email" class="mb-1">Email: </label>
             <input pInputText id="email" formControlName="email" aria-describedby="email-help" />
+            <small id="email-help" class="text-left text-red-300" *ngIf="isValidfield('email')"> {{ getFieldsErrors('email') }}</small>
           </div>
 
           <h4 class="text-center mt-4">Dirección</h4>
-          <div formGroupName="address">
+          <div formGroupName="address" class="flex flex-column gap-3">
             <div class="flex flex-column">
               <label for="street" class="mb-1">Calle: </label>
               <input pInputText id="street" formControlName="street" aria-describedby="street-help" />
@@ -30,6 +33,7 @@
             <div class="flex flex-column">
               <label for="city" class="mb-1">Ciudad: </label>
               <input pInputText id="city" formControlName="city" aria-describedby="city-help" />
+              <small id="city-help" class="text-left text-red-300" *ngIf="isValidfield('address.city')"> {{ getFieldsErrors('address.city') }}</small>
             </div>
             <div class="flex flex-column">
               <label for="zipcode" class="mb-1">Código Postal: </label>
@@ -37,7 +41,7 @@
             </div>
 
             <h4 class="text-center mt-4">Coordenadas</h4>
-            <div formGroupName="geo">
+            <div formGroupName="geo" class="flex flex-column gap-3">
               <div class="flex flex-column">
                 <label for="lat" class="mb-1">Latitud: </label>
                 <input pInputText id="lat" formControlName="lat" aria-describedby="lat-help" />
@@ -48,10 +52,10 @@
               </div>
             </div>
           </div>
-
           <div class="flex flex-column">
             <label for="phone" class="mb-1">Teléfono: </label>
             <input pInputText id="phone" formControlName="phone" aria-describedby="phone-help" />
+            <small id="phone-help" class="text-left text-red-300" *ngIf="isValidfield('phone')"> {{ getFieldsErrors('phone') }}</small>
           </div>
           <div class="flex flex-column">
             <label for="website" class="mb-1">Sitio web: </label>
@@ -59,10 +63,11 @@
           </div>
 
           <h4 class="text-center mt-4">Compañía</h4>
-          <div formGroupName="company">
+          <div formGroupName="company" class="flex flex-column gap-3">
             <div class="flex flex-column">
               <label for="companyName" class="mb-1">Nombre de la Compañía: </label>
               <input pInputText id="companyName" formControlName="name" aria-describedby="companyName-help" />
+              <small id="companyName-help" class="text-left text-red-300" *ngIf="isValidfield('company.name')"> {{ getFieldsErrors('company.name') }}</small>
             </div>
             <div class="flex flex-column">
               <label for="catchPhrase" class="mb-1">Eslogan: </label>
@@ -76,11 +81,11 @@
         </form>
       </div>
     </div>
-    <div class="col-8 pt-0 pl-3 pr-3">
+    <div class="col-8 pt-0 pl-3 pr-3 overflow-auto maxScreen">
       <div class="containerView border-round-lg pt-2 pl-5 pr-5 pb-2">
         <h3 class="text-center">Tareas</h3>
         <div class="relative">
-          <button  (click)="selectedTaskIndex = (selectedTaskIndex === 0 ? null : 0)">+ Nueva tarea</button>
+          <p-button label="Nueva tarea" icon="pi pi-plus" (click)="selectedTaskIndex = (selectedTaskIndex === 0 ? null : 0)" />
           <div class="absolute top-100 left-0 z-2" *ngIf="selectedTaskIndex === 0">
             <app-task (showComponentTask)="showComponentTask($event)" (updateTask)="addTask($event)"></app-task>
           </div>
@@ -90,19 +95,21 @@
             <ng-template pTemplate="header">
               <tr>
                 <th pSortableColumn="id" style="width:20%" class="text-center"> ID <p-sortIcon field="id" /></th>
-                <th pSortableColumn="title" style="width:60%"> Titulo <p-sortIcon field="title" /></th>
+                <th pSortableColumn="title" style="width:50%"> Titulo <p-sortIcon field="title" /></th>
                 <th pSortableColumn="completed" style="width:20%" class="text-center"> Estado <p-sortIcon field="completed"/></th>
+                <th pSortableColumn="completed" style="width:10%" class="text-center"> Estado <p-sortIcon field="completed"/></th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-task let-rowIndex="rowIndex">
               <tr>
-                <td class="text-center relative"><span class="cursor-pointer" (click)="selectedTaskIndex = rowIndex+1">{{ task.id }}</span>
-                  <div class="absolute top-50 left-50 z-2" *ngIf="selectedTaskIndex === rowIndex+1">
+                <td class="text-center relative"><span class="cursor-pointer text-primary" (click)="selectedTaskIndex = rowIndex+1">{{ task.id == 0 ? 'Nuevo' : task.id }}</span>
+                  <div class="absolute top-0 left-0 z-2" *ngIf="selectedTaskIndex === rowIndex+1">
                     <app-task [task]="task" (showComponentTask)="showComponentTask($event)" (updateTask)="addTask($event)"></app-task>
                   </div>
                 </td>
                 <td>{{ task.title }}</td>
                 <td class="text-center"><p-badge [value]="task.completed ? 'Completado':'Incompleto'" [severity]="task.completed ? 'success':'danger'">></p-badge></td>
+                <td><p-button (onClick)="showDialog(task.id)" label="Eliminar"/></td>
               </tr>
             </ng-template>
           </p-table>
@@ -110,8 +117,15 @@
       </div>
     </div>
   </div>
-  <div class="flex justify-content-center m-5 mb-6">
-    <button type="button" (click)="saveProject()">Crear/Guardar proyecto</button>
-    <button type="button" [routerLink]="['/projects/list']">Atras</button>
+  <div class="flex justify-content-center m-5 mb-6 gap-3">
+    <p-button label="Atras" severity="secondary" [routerLink]="['/projects/list']"/>
+    <p-button label="Guardar proyecto" (click)="saveProject()"/>
   </div>
+  <p-dialog header="Desea eliminar la tarea" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+    <span class="p-text-secondary block mb-5">Esta seguro que desea eliminar esta tarea?</span>
+    <div class="flex justify-content-end gap-2">
+        <p-button label="Cancelar" severity="secondary" (onClick)="visible = false" />
+        <p-button label="Eliminar" severity="danger" (onClick)="deteteTask()" />
+    </div>
+  </p-dialog>
 </div>

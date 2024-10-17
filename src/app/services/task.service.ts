@@ -28,6 +28,10 @@ export class TaskService {
           if (!existsInApi) mergedTasks.push(tempTask);
         });
 
+        this.tasksDeleted.forEach(id => {
+          const taskIndex = mergedTasks.findIndex(task => task.id === id);
+          if (taskIndex >= 0) mergedTasks.splice(taskIndex, 1);
+        });
 
         return mergedTasks;
       })
@@ -41,7 +45,6 @@ export class TaskService {
   }
 
   async createOrUpdateTask(tasks: Task[], projectId: number): Promise<void> {
-    const tasksTempClone = structuredClone(tasks);
     const tasksFromApi = await this.getAllTasks().toPromise();
 
     tasks.forEach(task => {
@@ -62,7 +65,11 @@ export class TaskService {
         }
       }
     });
-    console.log(this.tasksTemp);
+  }
+
+
+  deleteTask(tasksId: number[]): void {
+    tasksId.forEach(id => this.tasksDeleted.push(id));
   }
 
 

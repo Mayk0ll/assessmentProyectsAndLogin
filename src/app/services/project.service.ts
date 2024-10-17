@@ -10,6 +10,7 @@ export class ProjectService {
 
   private urlProjects = 'https://jsonplaceholder.typicode.com/users';
   private projectsTemp: Project[] = [];
+  private projectsDeleted: number[] = [];
   private http = inject( HttpClient );
 
   constructor() {}
@@ -25,6 +26,11 @@ export class ProjectService {
         this.projectsTemp.forEach(tempProject => {
           const existsInApi = projectsFromApi.some(apiProject => apiProject.id === tempProject.id);
           if (!existsInApi) mergedProjects.push(tempProject);
+        });
+
+        this.projectsDeleted.forEach(id => {
+          const projectIndex = mergedProjects.findIndex(project => project.id === id);
+          if (projectIndex >= 0) mergedProjects.splice(projectIndex, 1);
         });
 
         return mergedProjects;
@@ -63,6 +69,11 @@ export class ProjectService {
     }
     return project.id;
   }
+
+  deleteProject(id: number): void {
+    this.projectsDeleted.push(id);
+  }
+
 }
 
 
