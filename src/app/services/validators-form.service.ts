@@ -22,18 +22,11 @@ export class ValidatorsFormService {
       const pass1Control = formGroup.controls[pass1];
       const pass2Control = formGroup.controls[pass2];
 
-      // const prueba1 = formGroup.get(pass1)?.value;
-      // const prueba2 = formGroup.get(pass2)?.value;
-
       if ( pass1Control.value !== pass2Control.value ) pass2Control.setErrors( { noEqueals: true } );
 
       return null;
     }
   }
-
-  // public isValidfield( field: string, form: FormGroup ): boolean | null {
-  //   return form.controls[field].errors && form.controls[field].touched;
-  // }
 
   public isValidfield(field: string, form: FormGroup): boolean | null {
     const control = form.get(field);
@@ -68,6 +61,6 @@ export class ValidatorsFormService {
       }
     }
 
-    return null;  // Si no hay errores, devolvemos null
+    return null;
   }
 }

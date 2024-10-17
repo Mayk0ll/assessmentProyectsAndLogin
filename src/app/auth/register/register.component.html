@@ -1,5 +1,5 @@
 <div class="body">
-  <div class="login-container p-5">
+  <div class="login-container flex flex-column gap-3 p-5">
     <h2>Crear Cuenta</h2>
     <form [formGroup]="formRegister" autocomplete="off" (ngSubmit)="register()" [formGroup]="formRegister">
       <div class="flex flex-column gap-2 mb-3">
@@ -22,8 +22,8 @@
         <input type="password" pInputText id="password2" name="password2" aria-describedby="username-help"  formControlName="password2" />
         <small id="username-help" class="text-left text-red-300" *ngIf="isValidfield('password2')"> {{ getFieldsErrors('password2') }}</small>
       </div>
-      <button type="submit" class="btn btn-primary">Crear cuenta</button>
+      <p-button type="submit" label="Crear cuenta" severity="secondary"/>
     </form>
-    <span class="cursorPointer mt-3" (click)="redirectToLogin()">Ingresar</span>
+    <span class="cursorPointer" (click)="redirectToLogin()">Ingresar</span>
   </div>
 </div>

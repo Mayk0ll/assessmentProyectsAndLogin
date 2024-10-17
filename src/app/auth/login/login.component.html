@@ -1,7 +1,7 @@
 <div class="body">
   <div class="login-container flex flex-column gap-3 p-5">
     <h2>Iniciar sesion</h2>
-    <form [formGroup]="formLogin" (ngSubmit)="login()">
+    <form [formGroup]="formLogin" class="flex flex-column gap-3" (ngSubmit)="login()">
       <div class="flex flex-column gap-2">
         <label for="email" class="text-left">Email: </label>
         <input type="text" pInputText id="email" name="email" aria-describedby="username-help"  formControlName="email" />
@@ -12,7 +12,7 @@
         <input type="password" pInputText id="password" name="password" aria-describedby="username-help"  formControlName="password" />
         <small id="username-help" class="text-left text-red-300" *ngIf="isValidfield('password')"> {{ getFieldsErrors('password') }}</small>
       </div>
-      <button type="submit" class="btn btn-primary mt-3">Ingresar</button>
+      <p-button type="submit" label="Ingresar" severity="secondary"/>
     </form>
     <span class="cursorPointer" (click)="redirectToRegister()">No tengo cuenta</span>
   </div>
