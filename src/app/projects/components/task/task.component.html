@@ -1,1 +1,16 @@
-<p>task works!</p>
+<div class="bg-primary-reverse text-white border-2 border-primary border-round-md p-3 w-25rem">
+  <form class="flex flex-column gap-3" (ngSubmit)="saveTask()" [formGroup]="formTask">
+    <div class="flex flex-column gap-2">
+      <label for="title" class="text-left">Titulo: </label>
+      <input type="text" pInputText id="title" name="title" aria-describedby="username-help"  formControlName="title" />
+      <small id="username-help" class="text-left text-red-300" *ngIf="isValidfield('title')"> {{ getFieldsErrors('title') }}</small>
+    </div>
+    <div class="flex flex-column gap-2">
+      <p-checkbox formControlName="completed" label="Completado" name="completed" binary="true" />
+    </div>
+    <div class="flex justify-content-center">
+      <button>Guardar Tarea</button>
+      <button type="button" (click)="closeTask()">Cerrar</button>
+    </div>
+  </form>
+</div>

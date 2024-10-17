@@ -79,7 +79,12 @@
     <div class="col-8 pt-0 pl-3 pr-3">
       <div class="containerView border-round-lg pt-2 pl-5 pr-5 pb-2">
         <h3 class="text-center">Tareas</h3>
-        <button>+ Nueva tarea</button>
+        <div class="relative">
+          <button  (click)="selectedTaskIndex = (selectedTaskIndex === 0 ? null : 0)">+ Nueva tarea</button>
+          <div class="absolute top-100 left-0 z-2" *ngIf="selectedTaskIndex === 0">
+            <app-task (showComponentTask)="showComponentTask($event)" (updateTask)="addTask($event)"></app-task>
+          </div>
+        </div>
         <div>
           <p-table [value]="tasks" [tableStyle]="{'min-width': '100%'}" sortMode="multiple">
             <ng-template pTemplate="header">
@@ -91,7 +96,11 @@
             </ng-template>
             <ng-template pTemplate="body" let-task let-rowIndex="rowIndex">
               <tr>
-                <td class="text-center">{{ task.id }}</td>
+                <td class="text-center relative"><span class="cursor-pointer" (click)="selectedTaskIndex = rowIndex+1">{{ task.id }}</span>
+                  <div class="absolute top-50 left-50 z-2" *ngIf="selectedTaskIndex === rowIndex+1">
+                    <app-task [task]="task" (showComponentTask)="showComponentTask($event)" (updateTask)="addTask($event)"></app-task>
+                  </div>
+                </td>
                 <td>{{ task.title }}</td>
                 <td class="text-center"><p-badge [value]="task.completed ? 'Completado':'Incompleto'" [severity]="task.completed ? 'success':'danger'">></p-badge></td>
               </tr>

@@ -21,7 +21,6 @@ export default class ListprojectsComponent implements OnInit {
   ngOnInit() {
     this.projectService.getAllProjects().subscribe( (projects: Project[]) => {
       this.projects = projects;
-      console.log(projects);
     });
   }
 

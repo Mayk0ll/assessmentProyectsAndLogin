@@ -6,6 +6,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { BadgeModule } from 'primeng/badge';
+import { CheckboxModule } from 'primeng/checkbox';
 
 
 
@@ -20,5 +21,6 @@ export function getPrimeNGModules() {
     TableModule,
     CardModule,
     BadgeModule,
+    CheckboxModule
   ];
 }

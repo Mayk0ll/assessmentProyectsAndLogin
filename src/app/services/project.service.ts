@@ -8,16 +8,13 @@ import { Project } from '../models';
 @Injectable({providedIn: 'root'})
 export class ProjectService {
 
-  private http = inject( HttpClient );
-
   private urlProjects = 'https://jsonplaceholder.typicode.com/users';
   private projectsTemp: Project[] = [];
+  private http = inject( HttpClient );
 
   constructor() {}
 
   getAllProjects(): Observable<Project[]> {
-    console.log(this.projectsTemp);
-
     return this.http.get<Project[]>(this.urlProjects).pipe(
       map(projectsFromApi => {
         const mergedProjects = projectsFromApi.map(projectFromApi => {
@@ -27,9 +24,7 @@ export class ProjectService {
 
         this.projectsTemp.forEach(tempProject => {
           const existsInApi = projectsFromApi.some(apiProject => apiProject.id === tempProject.id);
-          if (!existsInApi) {
-            mergedProjects.push(tempProject);
-          }
+          if (!existsInApi) mergedProjects.push(tempProject);
         });
 
         return mergedProjects;
@@ -48,7 +43,7 @@ export class ProjectService {
   }
 
   async createOrUpdateProject(projectArg: Project): Promise<number> {
-    const project = JSON.parse(JSON.stringify(projectArg));
+    const project = structuredClone(projectArg);
     const projectTempIndex = this.projectsTemp.findIndex(p => p.id === project.id);
     if (projectTempIndex >= 0) this.projectsTemp[projectTempIndex] = project;
     else {

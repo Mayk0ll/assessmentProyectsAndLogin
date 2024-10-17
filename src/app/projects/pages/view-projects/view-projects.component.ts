@@ -5,13 +5,14 @@ import { ProjectService, TaskService } from '@services/index.ts';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Project, Task } from '../../../models';
+import { TaskComponent } from '../../components/task/task.component';
 
 
 
 @Component({
   selector: 'app-view-project',
   standalone: true,
-  imports: [...getPrimeNGModules(), CommonModule, ReactiveFormsModule],
+  imports: [...getPrimeNGModules(), CommonModule, ReactiveFormsModule, TaskComponent],
   templateUrl: './view-projects.component.html',
   styleUrls: ['./view-projects.component.css', '../../../app.component.css']
 })
@@ -27,6 +28,8 @@ export default class ViewprojectComponent implements OnInit {
   public project: Project = new Project();
   public tasks: Task[] = [];
   public newTasks: Task[] = [];
+  public projectId: number = 0;
+  public selectedTaskIndex: number | null = null;
 
   public taskForm = this.fb.group({ title: ['', Validators.required], completed: [false] });
   public projectForm = this.fb.group({
@@ -53,28 +56,41 @@ export default class ViewprojectComponent implements OnInit {
   });
 
 
+  public addTask(task: Task) {
+    if ( task.id == 0 ){
+      this.newTasks.push({...task, userId: this.projectId})
+      this.tasks.push({...task as Task});
+    } else {
+      const taskTampIndex = this.newTasks.findIndex( t => t.id == task.id );
+      if( taskTampIndex >= 0 ) this.newTasks[taskTampIndex] = {...task as Task}
+      else this.newTasks.push({...task as Task});
 
-  public addTask() {
-
+      const taskIndex = this.tasks.findIndex( t => t.id == task.id );
+      if( taskIndex >= 0 ) this.tasks[taskIndex] = {...task as Task}
+    }
   }
 
-
+  showComponentTask(event: boolean): void {
+    this.selectedTaskIndex = null;
+  }
 
   async saveProject() {
-    if( this.projectForm.valid ){ this.projectForm.markAllAsTouched() }
+    if( !this.projectForm.valid ){ this.projectForm.markAllAsTouched() }
     this.project = {...this.project, ...this.projectForm.value as Project};
     const idProject = await this.projectService.createOrUpdateProject(this.project);
+    console.log(this.newTasks);
+    await this.taskService.createOrUpdateTask(this.newTasks, idProject);
   }
 
   ngOnInit(): void {
     this.activateRouter.params.subscribe(params => {
-      const projectId = Number(params['id']);
-      if(projectId){
-        this.projectService.getProjectById(projectId).subscribe((project: Project) => {
+      this.projectId = Number(params['id']);
+      if(this.projectId){
+        this.projectService.getProjectById(this.projectId).subscribe((project: Project) => {
           if( !project ) this.router.navigate(['/projects/list'])
             this.project = project;
             this.projectForm.patchValue({...project});
-            this.taskService.getAllTasksByprojectId(projectId).subscribe(tasks => { this.tasks = tasks });
+            this.taskService.getAllTasksByProjectId(this.projectId).subscribe(tasks => {  this.tasks = tasks });
         });
       }
     });
